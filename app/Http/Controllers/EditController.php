@@ -30,7 +30,9 @@ public function editUser($id)
     $user->email = $request->email;
     $user->save();
         
-        return redirect()->route('userList')->with('success', 'Data updated successfully');
+    flash()->info('Data updated successfully');
+    
+        return redirect()->route('userList');
 
 
 

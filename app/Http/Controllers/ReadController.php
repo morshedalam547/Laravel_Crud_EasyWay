@@ -5,6 +5,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+use Illuminate\Pagination\Paginator;
+
+ Paginator::useBootstrapFive();
 class ReadController extends Controller
 {
     public function addUsers(Request $request){
@@ -90,20 +94,35 @@ class ReadController extends Controller
             'updated_at' => now(),
         ]);
 
+  
+
+// notyf()
+//     ->duration(2000) // 2 seconds
+//     ->success('Operation completed successfully.');
 
 
-        return redirect()->route('userList')->with('success', 'Data successfully Added');
+flash()->success('Your changes have been saved!');
+
+        return redirect()->route('userList');
+
+        // return redirect()->route('userList')->with('success', 'Data updated successfully');
 
     }
 
 
     
 
-    public function userList(){
+    // public function userList(){
 
-        $users = User::all();
+    //     $users = User::all();
 
+    // return view('userList',compact('users'));
+    // }
+
+
+    public function showData() {
+    $users = User::paginate(4); // paginate instead of all()
     return view('userList', compact('users'));
-    }
+}
 
 }

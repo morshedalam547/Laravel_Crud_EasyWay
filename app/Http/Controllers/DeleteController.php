@@ -11,7 +11,11 @@ class DeleteController extends Controller
     $user = User::findOrFail($id); // id দিয়ে ইউজার খোঁজা
     $user->delete(); // ডিলিট করা
     
+flash()->warning('Data Delete successfully.');
 
-        return redirect()->route('userList')->with('delete', 'Data Delete successfully');
+        return redirect()->route('userList');
+
+
+        // return redirect()->route('userList')->with('delete', 'Data Delete successfully');
 }
 }

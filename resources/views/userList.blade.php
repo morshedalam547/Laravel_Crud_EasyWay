@@ -14,43 +14,47 @@
         /* Bootstrap info background color */
         border-radius: 5px;
     }
-
-
-
 </style>
 
 <body>
-
+    {{--
     <div class="container d-flex justify-content-center">
         @if(session('delete'))
-            <div class="alert alert-danger alert-dismissible fade show text-center mt-3 w-50" role="alert">
-                {{ session('delete') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show text-center mt-3 w-50" role="alert">
+            {{ session('delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
     </div>
 
     <div class="container d-flex justify-content-center">
         @if(session('success'))
-            <div class="alert alert-primary alert-dismissible fade show text-center mt-3 w-50" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-primary alert-dismissible fade show text-center mt-3 w-50" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
-    </div>
+    </div> --}}
 
 
 
     <div class="container mt-5">
-        <div class="d-flex justify-content-between">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <a href="/" class="mb-4 h2 text-decoration-none text-success hover-bg-info px-2">Home</a>
-            <h2 class="mb-4 text-end">User List</h2>
+
+            <form class="d-flex" method="GET" action="{{ route('search') }}">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search Users"
+                    value="{{ request('search') }}">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+
         </div>
 
         <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>SL</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Action</th>
@@ -59,12 +63,13 @@
             <tbody>
                 @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->id }}</td>
+                        <td>{{ $loop->iteration + ($users->currentPage() - 1) * $users->perPage() }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
                             <a href="{{ route('editUser', $user->id) }}" class='btn btn-primary'>Edit</a>
-                            <a href="{{ route('deleteUser', $user->id) }}" onclick="return confirm('Are you sure delete this iteam ?')"
+                            <a href="{{ route('deleteUser', $user->id) }}"
+                                onclick="return confirm('Are you sure delete this iteam ?')"
                                 class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
@@ -73,9 +78,23 @@
 
             </tbody>
         </table>
+        {{ $users->appends(['search' => request('search')])->links() }}
 
-  {{-- pagination --}}
-   {{ $users->links() }}
+        {{-- pagination --}}
+        {{-- {{ $users->links() }} --}}
+
+
+
+        @if(isset($notFound))
+            <div class="alert alert-warning text-center">
+                {{ $notFound }}
+            </div>
+
+            <div class="text-center">
+                <a href="{{ route('search') }}" class="btn btn-danger mt-2">Back to User List</a>
+            </div>
+        @endif
+
 
 
         <!-- Bootstrap JS + Popper.js -->

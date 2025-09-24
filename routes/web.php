@@ -4,6 +4,7 @@ use App\Http\Controllers\DeleteController;
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\InsertController;
 use App\Http\Controllers\ReadController;
+use App\Http\Controllers\searchController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 
@@ -13,7 +14,7 @@ Route::post('/addUsers', [ReadController::class, 'addUsers'])->name('usersStore'
 
  
 //Data Read Route or List Route or Show Route or get Route
-Route::get('/userList', [ReadController::class, 'showData'])->name('userList');
+// Route::get('/userList', [ReadController::class, 'showData'])->name('userList');
 
 
 //Data Update Route or Edit Route
@@ -23,3 +24,8 @@ Route::post('/updateUser/{id}', [EditController::class, 'updateUser'])->name('up
 
 //Data Delete Route or Destroy Route
 Route::get('/deleteUser/{id}', [DeleteController::class, 'deleteId'])->name('deleteUser');
+
+
+ 
+//Data Read Route or List Route or Show Route or get Route & search
+Route::get('/search', [searchController::class, 'searchList'])->name('search');

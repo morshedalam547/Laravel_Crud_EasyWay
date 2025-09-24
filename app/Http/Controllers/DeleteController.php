@@ -13,7 +13,7 @@ class DeleteController extends Controller
     
 flash()->warning('Data Delete successfully.');
 
-        return redirect()->route('userList');
+        return redirect()->route('search');
 
 
         // return redirect()->route('userList')->with('delete', 'Data Delete successfully');

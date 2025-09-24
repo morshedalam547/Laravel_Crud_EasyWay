@@ -103,7 +103,7 @@ class ReadController extends Controller
 
 flash()->success('Your changes have been saved!');
 
-        return redirect()->route('userList');
+        return redirect()->route('search');
 
         // return redirect()->route('userList')->with('success', 'Data updated successfully');
 
@@ -112,17 +112,6 @@ flash()->success('Your changes have been saved!');
 
     
 
-    // public function userList(){
 
-    //     $users = User::all();
-
-    // return view('userList',compact('users'));
-    // }
-
-
-    public function showData() {
-    $users = User::paginate(4); // paginate instead of all()
-    return view('userList', compact('users'));
-}
 
 }

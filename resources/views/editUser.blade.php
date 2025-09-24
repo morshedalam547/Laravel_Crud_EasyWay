@@ -23,11 +23,19 @@
                     <div class="mb-3">
                         <label class="form-label">Name</label>
                         <input type="text" class=" form-control" name="name" value="{{ old('name', $user->name) }}">
+
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}">
+                        
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100">Update</button>
